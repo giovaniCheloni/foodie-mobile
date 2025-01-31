@@ -7,9 +7,8 @@ import api from "../../constants/api.js";
 
 function Cardapio(props) {
 
-    var categoriaAnterior = "";
     const id_empresa = props.route.params.id_empresa;
-    const [cardapio, setCardapio] = useState({ itens: [] });
+    const [cardapio, setCardapio] = useState({ categorias: [] });
     const [favorito, setFavorito] = useState("N");
 
     async function LoadCardapio(id) {
@@ -114,25 +113,24 @@ function Cardapio(props) {
             </View>
 
             {
-                cardapio.itens.map((item) => {
-                    return <View key={item.id_produto} style={styles.containerProduto}>
+                cardapio.categorias.map((cat) => {
+                    return <View key={cat.id_categoria} style={styles.containerProduto}>
+
+                        <Text style={styles.categoria}>{cat.categoria}</Text>
 
                         {
-                            categoriaAnterior != item.categoria ?
-                                <Text style={styles.categoria}>{item.categoria}</Text>
-                                : null
+                            cat.itens.map((item) => {
+                                return <Produto key={item.id_produto}
+                                    id_produto={item.id_produto}
+                                    foto={item.icone}
+                                    nome={item.nome}
+                                    descricao={item.descricao}
+                                    valor={item.vl_produto}
+                                    onClick={ClickProduto}
+                                />
+                            })
+
                         }
-
-                        <Produto key={item.id_produto}
-                            id_produto={item.id_produto}
-                            foto={item.icone}
-                            nome={item.nome}
-                            descricao={item.descricao}
-                            valor={item.vl_produto}
-                            onClick={ClickProduto}
-                        />
-
-                        {categoriaAnterior = item.categoria}
 
                     </View>
                 })
