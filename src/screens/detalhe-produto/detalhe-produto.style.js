@@ -9,7 +9,8 @@ export const styles = {
         alignItems: "center"
     },
     foto: {
-        height: 150
+        height: 230,
+        width: "100%"
     },
     containerBack: {
         position: "absolute",
