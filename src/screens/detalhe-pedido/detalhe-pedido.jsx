@@ -5,15 +5,12 @@ import api from "../../constants/api.js";
 import { useState, useEffect } from "react";
 
 function DetalhePedido(props) {
-
     const id_pedido = props.route.params.id_pedido;
     const [pedido, setPedido] = useState({});
 
     async function LoadPedido() {
-
         try {
             const response = await api.get("/pedidos/" + id_pedido);
-
             if (response.data) {
                 setPedido(response.data);
             }
@@ -30,7 +27,6 @@ function DetalhePedido(props) {
     }, [])
 
     return <View style={styles.container}>
-
         <View style={styles.containerPedido}>
             <Text style={styles.textPedido}>Pedido: {id_pedido}</Text>
         </View>
@@ -39,7 +35,7 @@ function DetalhePedido(props) {
             keyExtractor={(item) => item.id_item}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
-                return <Produto key={item.id_item}
+                return <Produto
                     foto={item.icone}
                     nome={item.nome}
                     qtd={item.qtd}
@@ -53,32 +49,25 @@ function DetalhePedido(props) {
             <View style={styles.valores}>
                 <Text style={styles.total}>Resumo dos Valores</Text>
             </View>
-
             <View style={styles.valores}>
                 <Text style={styles.valor}>Subtotal</Text>
                 <Text style={styles.valor}>{
-                    new Intl.NumberFormat("pt-BR",
-                        { style: "currency", currency: "BRL" }).format(pedido.vl_subtotal)
+                    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(pedido.vl_subtotal)
                 }</Text>
             </View>
-
             <View style={styles.valores}>
                 <Text style={styles.valor}>Taxa de entrega</Text>
                 <Text style={styles.valor}>{
-                    new Intl.NumberFormat("pt-BR",
-                        { style: "currency", currency: "BRL" }).format(pedido.vl_taxa_entrega)
+                    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(pedido.vl_taxa_entrega)
                 }</Text>
             </View>
-
             <View style={styles.valores}>
                 <Text style={styles.total}>Total</Text>
                 <Text style={styles.total}>{
-                    new Intl.NumberFormat("pt-BR",
-                        { style: "currency", currency: "BRL" }).format(pedido.vl_total)
+                    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(pedido.vl_total)
                 }</Text>
             </View>
         </View>
-
     </View>
 }
 
