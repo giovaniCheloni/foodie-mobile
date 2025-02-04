@@ -36,13 +36,14 @@ function DetalhePedido(props) {
         </View>
 
         <FlatList data={pedido.itens}
-            keyExtractor={(item) => item.idItem}
+            keyExtractor={(item) => item.id_item}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
-                return <Produto key={item.idItem}
+                return <Produto key={item.id_item}
                     foto={item.icone}
                     nome={item.nome}
                     qtd={item.qtd}
+                    obs={item.obs}
                     descricao={item.descricao}
                     valor={item.vl_total} />
             }}
