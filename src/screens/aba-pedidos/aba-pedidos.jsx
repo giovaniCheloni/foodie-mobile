@@ -5,7 +5,9 @@ import Pedido from "../../components/pedido/pedido.jsx";
 import { useEffect, useState } from "react";
 import api from "../../constants/api.js";
 
+
 function AbaPedidos(props) {
+
     const [pedidos, setPedidos] = useState([]);
 
     function DetalhePedido(id) {
@@ -15,8 +17,10 @@ function AbaPedidos(props) {
     }
 
     async function LoadPedidos() {
+
         try {
             const response = await api.get("/pedidos");
+
             if (response.data) {
                 setPedidos(response.data);
             }
@@ -34,10 +38,10 @@ function AbaPedidos(props) {
 
     return <View style={styles.container}>
         <FlatList data={pedidos}
-            keyExtractor={(ped) => ped.id_pedido.toString()} // Ensure unique key
+            keyExtractor={(ped) => ped.id_pedido}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
-                return <Pedido
+                return <Pedido key={item.id_pedido}
                     logotipo={item.icone}
                     nome={item.nome}
                     valor={item.vl_total}
@@ -47,7 +51,9 @@ function AbaPedidos(props) {
                     onClickPedido={DetalhePedido}
                     color={item.cor} />
             }}
+
             contentContainerStyle={styles.containerList}
+
             ListEmptyComponent={() => {
                 return <View style={styles.empty}>
                     <Image source={icons.empty} />

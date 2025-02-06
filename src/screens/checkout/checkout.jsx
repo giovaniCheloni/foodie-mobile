@@ -10,23 +10,30 @@ import { useNavigation } from "@react-navigation/native";
 import api from "../../constants/api.js";
 
 function Checkout(props) {
+
     const nav = useNavigation();
-    const { itens, setItens, entrega, empresa, subtotal, total, CalculaValores } = useContext(CartContext);
+
+    const { itens, setItens, entrega, empresa, setEmpresa, subtotal,
+        total, CalculaValores } = useContext(CartContext);
 
     function ClickDelete(id_item) {
         const itensNovo = itens.filter((item) => {
             return item.id_item != id_item
         });
+
         setItens(itensNovo);
     }
 
     function ClickLimpar() {
+        setEmpresa(0);
         setItens([]);
         props.navigation.goBack();
     }
 
     async function EnviarPedido() {
+
         try {
+
             const ped = {
                 id_empresa: empresa,
                 vl_subtotal: subtotal,
@@ -34,7 +41,9 @@ function Checkout(props) {
                 vl_total: total,
                 itens: itens
             };
+
             const response = await api.post("/pedidos", ped);
+
             if (response.data) {
                 ClickLimpar();
             }
@@ -48,6 +57,7 @@ function Checkout(props) {
 
     useEffect(() => {
         CalculaValores();
+
         nav.setOptions({
             headerRight: () => {
                 return <TouchableOpacity onPress={ClickLimpar}>
@@ -57,12 +67,14 @@ function Checkout(props) {
         })
     }, [])
 
+
     return <View style={styles.container}>
+
         <FlatList data={itens}
             keyExtractor={(item) => item.id_item}
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => {
-                return <Produto
+                return <Produto key={item.id_item}
                     id_produto={item.id_produto}
                     foto={item.icone}
                     nome={item.nome}
@@ -75,32 +87,41 @@ function Checkout(props) {
                 />
             }}
         />
+
         <View>
             <View style={styles.valores}>
                 <Text style={styles.total}>Resumo dos Valores</Text>
             </View>
+
             <View style={styles.valores}>
                 <Text style={styles.valor}>Subtotal</Text>
                 <Text style={styles.valor}>{
-                    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(subtotal)
+                    new Intl.NumberFormat("pt-BR",
+                        { style: "currency", currency: "BRL" }).format(subtotal)
                 }</Text>
             </View>
+
             <View style={styles.valores}>
                 <Text style={styles.valor}>Taxa de entrega</Text>
                 <Text style={styles.valor}>{
-                    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(entrega)
+                    new Intl.NumberFormat("pt-BR",
+                        { style: "currency", currency: "BRL" }).format(entrega)
                 }</Text>
             </View>
+
             <View style={styles.valores}>
                 <Text style={styles.total}>Total</Text>
                 <Text style={styles.total}>{
-                    new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(total)
+                    new Intl.NumberFormat("pt-BR",
+                        { style: "currency", currency: "BRL" }).format(total)
                 }</Text>
             </View>
         </View>
+
         <View style={styles.conatinerBtn}>
             <Button texto="Finalizar Pedido" onPress={EnviarPedido} />
         </View>
+
     </View>
 }
 

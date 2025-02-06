@@ -30,13 +30,13 @@ export const styles = {
     cartQtd: {
         fontSize: FONT_SIZE.xsm,
         color: COLORS.white,
-        borderRadius: 3,
+        borderRadius: 10,
         backgroundColor: COLORS.red,
         padding: 2,
-        paddingLeft: 4,
-        paddingRight: 4,
+        paddingLeft: 5,
+        paddingRight: 5,
         position: "absolute",
-        top: -5,
-        right: 0
+        top: -10,
+        right: -2
     }
 }
