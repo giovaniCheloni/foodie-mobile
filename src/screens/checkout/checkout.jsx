@@ -13,7 +13,8 @@ function Checkout(props) {
 
     const nav = useNavigation();
 
-    const { itens, setItens, entrega, empresa, setEmpresa, subtotal,
+const { itens, setItens, entrega, empresa, setEmpresa, subtotal, setSubtotal, setEntrega,
+
         total, CalculaValores } = useContext(CartContext);
 
     function ClickDelete(id_item) {
@@ -24,11 +25,14 @@ function Checkout(props) {
         setItens(itensNovo);
     }
 
-    function ClickLimpar() {
-        setEmpresa(0);
-        setItens([]);
-        props.navigation.goBack();
-    }
+function ClickLimpar() {
+    setEmpresa(0);
+    setItens([]);
+    setSubtotal(0); // Reset subtotal
+    setEntrega(0); // Reset delivery fee
+    props.navigation.goBack();
+}
+
 
     async function EnviarPedido() {
 
