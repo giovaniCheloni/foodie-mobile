@@ -66,7 +66,7 @@ function Login(props) {
             </View>
 
             <View style={styles.form}>
-                <TextBox label="Senha" isPassword={false}
+                <TextBox label="Senha" isPassword={true}
                     onChangeText={(texto) => setSenha(texto)}
                     value={senha} />
             </View>
